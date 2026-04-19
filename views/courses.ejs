@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<section style="padding: 100px 0 60px; background: #fff; text-align: center;">
+  <div class="container">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;" class="fade-in">Our Academic Programs</h1>
+    <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;" class="fade-in">Find the specialty that aligns with your career goals and passions.</p>
+  </div>
+</section>
+
+<section style="padding-bottom: 100px;">
+  <div class="container">
+    <div class="grid">
+      <% if (courses && courses.length > 0) { %>
+        <% courses.forEach(function(course, index) { %>
+          <div class="card course-card fade-in" style="animation-delay: <%= index * 0.1 %>s;">
+            <div class="course-image-wrapper">
+              <% 
+                let imgUrl = '/images/course_cs.png';
+                if(course.name.toLowerCase().includes('business')) imgUrl = '/images/course_bus.png';
+                else if(course.name.toLowerCase().includes('mechanical')) imgUrl = '/images/course_mech.png';
+              %>
+              <img src="<%= imgUrl %>" alt="<%= course.name %>" class="course-image">
+              <span class="course-tag">New Season</span>
+            </div>
+            <div class="course-content">
+              <div class="course-meta">
+                <span><i class="fas fa-tag"></i> <%= course.code %></span>
+                <span><i class="fas fa-clock"></i> <%= course.duration %></span>
+              </div>
+              <h3 style="margin-bottom: 1rem;"><%= course.name %></h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; flex: 1;">
+                <%= course.description %>
+              </p>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                <a href="/apply?program=<%= encodeURIComponent(course.name) %>" class="btn btn-primary">Apply Now</a>
+                <a href="#" style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">Learn More</a>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div style="text-align: center; grid-column: 1 / -1; padding: 4rem;">
+          <p>No courses match your selection at this time.</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

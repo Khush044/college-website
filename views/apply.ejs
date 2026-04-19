@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+<section style="padding: 100px 0; background: #fff;">
+  <div class="container">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Course Application</h1>
+        <p style="color: var(--text-muted);">Fill out the form below to start your academic journey.</p>
+      </div>
+
+      <% if (success) { %>
+        <div class="alert alert-success" style="padding: 2rem;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i></div>
+          <div>
+            <h3>Application Submitted Successfully!</h3>
+            <p style="margin-top: 0.5rem;">Your application for <strong><%= typeof fullName !== 'undefined' ? fullName : '' %></strong> has been received. You can track your status in your <a href="/dashboard" style="color: #065f46; font-weight: 700; text-decoration: underline;">dashboard</a>.</p>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+      <% } else { %>
+        
+        <div class="card" style="padding: 3rem;">
+          <% if (error) { %>
+            <div class="alert alert-error">
+              <i class="fas fa-exclamation-circle"></i> <%= error %>
+            </div>
+          <% } %>
+
+          <form action="/apply" method="POST">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+              <div class="form-group" style="grid-column: span 2;">
+                <i class="fas fa-user-graduate form-icon"></i>
+                <input type="text" id="fullName" name="fullName" class="form-control" placeholder=" " value="<%= user ? user.name : '' %>" required>
+                <label for="fullName" class="form-label">Full Name</label>
+              </div>
+
+              <div class="form-group">
+                <i class="fas fa-envelope form-icon"></i>
+                <input type="email" id="email" name="email" class="form-control" placeholder=" " value="<%= user ? user.email : '' %>" required readonly>
+                <label for="email" class="form-label">Email Address (Primary)</label>
+              </div>
+
+              <div class="form-group">
+                <i class="fas fa-phone form-icon"></i>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder=" " required>
+                <label for="phone" class="form-label">Phone Number</label>
+              </div>
+
+              <div class="form-group" style="grid-column: span 2;">
+                <i class="fas fa-book form-icon"></i>
+                <select id="program" name="program" class="form-control" required style="padding-top: 1.25rem;">
+                  <option value="" disabled <%= !program ? 'selected' : '' %>>Select your preferred program</option>
+                  <option value="Computer Science" <%= program === 'Computer Science' ? 'selected' : '' %>>Computer Science (B.S.)</option>
+                  <option value="Business Administration" <%= program === 'Business Administration' ? 'selected' : '' %>>Business Administration (BBA)</option>
+                  <option value="Mechanical Engineering" <%= program === 'Mechanical Engineering' ? 'selected' : '' %>>Mechanical Engineering (B.E.)</option>
+                </select>
+                <label for="program" class="form-label" style="top: 0; transform: translateY(-50%) scale(0.85); background: #fff; padding: 0 0.5rem; left: 1rem; color: var(--primary);">Academic Program</label>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-main); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--text-muted); display: flex; gap: 1rem; align-items: flex-start;">
+              <i class="fas fa-info-circle" style="color: var(--primary); font-size: 1.2rem; margin-top: 0.2rem;"></i>
+              <p>By submitting this application, you agree to our terms of processing. Final admission is subject to document verification and entrance examination results.</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" style="padding: 1rem; margin-top: 2rem;">
+              Submit Application <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

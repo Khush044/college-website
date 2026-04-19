@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+
+<header class="dashboard-header">
+  <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <h1 class="fade-in">Welcome back, <%= user.name %>!</h1>
+      <p class="fade-in" style="color: var(--text-muted); margin-top: 0.5rem;">Role: <span style="font-weight: 600; color: var(--primary);"><%= user.role %></span> | Member since: <%= new Date(user.createdAt).toLocaleDateString() %></p>
+    </div>
+    <div class="fade-in" style="display: flex; gap: 1rem;">
+      <a href="/courses" class="btn btn-secondary">Explore More Credits</a>
+      <a href="/apply" class="btn btn-primary">Start New Application</a>
+    </div>
+  </div>
+</header>
+
+<section class="container fade-in" style="margin-bottom: 100px;">
+  <div style="margin-bottom: 2rem;">
+    <h2>Your Applications</h2>
+  </div>
+
+  <% if (applications && applications.length > 0) { %>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead style="background: var(--bg-main); border-bottom: 1px solid var(--border);">
+          <tr>
+            <th style="padding: 1.5rem;">Academic Program</th>
+            <th style="padding: 1.5rem;">Submission Date</th>
+            <th style="padding: 1.5rem;">Status</th>
+            <th style="padding: 1.5rem; text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% applications.forEach(function(app) { %>
+            <tr style="border-bottom: 1px solid var(--border); transition: var(--transition);">
+              <td style="padding: 1.5rem; font-weight: 600;"><%= app.program %></td>
+              <td style="padding: 1.5rem; color: var(--text-muted);"><%= new Date(app.appliedAt).toLocaleDateString() %></td>
+              <td style="padding: 1.5rem;">
+                <span class="status-badge status-<%= app.status.toLowerCase() %>">
+                  <%= app.status %>
+                </span>
+              </td>
+              <td style="padding: 1.5rem; text-align: right;">
+                <button class="btn-link" style="color: var(--secondary);">View Details</button>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="card" style="text-align: center; padding: 5rem;">
+      <i class="fas fa-file-invoice" style="font-size: 4rem; color: var(--border); margin-bottom: 2rem;"></i>
+      <h3>You haven't submitted any applications yet.</h3>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Ready to start your journey? Apply for your first program today.</p>
+      <a href="/apply" class="btn btn-primary">Apply Now</a>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>
